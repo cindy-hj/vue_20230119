@@ -12,19 +12,14 @@
 
     <!-- 1. 화면 오픈시 보이지 않게
     2. 상품명 클릭시 보이게
-    3. 닫기 버튼 눌리면 안보이게 -->
+    3. 닫기 버튼 눌리면 안보이게
+
+    4. 모달 컴포넌트 분리
+    5. 모달 정상 구동 만들기 -->
     <div v-for="product in list" :key="product">
-      <div class="blackBg" v-if="product.id === true">
-        <div class="whiteBg">
-          <h3>{{ product.title }}</h3>
-          <p><img :src="product.img" style="width: 200px;" /></p>
-          <p>{{ product.detail }}</p>
-          <p>{{ product.price }}원</p>
-          <p><button @click="product.id = false">닫기</button></p>
-        </div>
-      </div>
+      <modal-page v-show="product.id === true"></modal-page>    
     </div>
-  
+   
     <!-- 1. 상품명과 가격의 배열 형식으로 데이터 바인딩-->
     <div class="item">
       <div v-for="product in list" :key="product">
@@ -67,10 +62,14 @@
 import { exportFile,exportFile2 } from './exportFile.js'
 import { list } from './exportFile.js'
 
+import ModalPage from '@/components/ModalPage.vue'
 
 
 export default {
   name: 'App',
+  components: {
+    ModalPage
+  },
 
   data() {
 
@@ -82,10 +81,6 @@ export default {
       exportFile:{exportFile, exportFile2},
       list
     }
-  },
-
-  components: {
-    
   }
 }
 </script>
@@ -139,22 +134,4 @@ img {
 => 크기값도 지정 가능
 => 다른 태그의 부모가 될 수 없음
 => 크기값 설정시 콕 찍어 너 크기야 */
-.blackBg {
-  width: 100%;
-  height: 100%;
-  /* a는 투명도값, 0은 투명, 1은 불투명 */
-  background: rgba(0,0,0,0.5);
-  position: fixed;
-  padding: 20px;
-}
-.whiteBg {
-  width: 80%;
-  border: 1px solid #cccccc;
-  border-radius: 20px;
-  background-color: aliceblue;
-  text-align: center;
-  margin: 0 auto;
-  padding: 20px;
-}
-
 </style>
